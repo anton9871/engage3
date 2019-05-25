@@ -1,0 +1,51 @@
+<a style="display:block" href="/">Back to Categories</a>
+
+<!-- form adds a new product -->
+<div style="width: 50%; display:inline-block">
+    <form #myForm="ngForm" (submit)="addNewProduct();myForm.reset()">
+      <h6>Add a new product to the {{categoryName}} category:</h6>
+      <div class="form-group">
+        <label>Name: </label>
+        <input type="text" [(ngModel)]="product.name" name="name" class="form-control col-6">
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+    </form>
+  </div>
+  
+  
+  <!-- form pops up if you click update -->
+  <div *ngIf="showEditFormBoolean" style="width: 50%; display:inline-block">
+    <form #myForm="ngForm" (submit)="updateProduct();myForm.reset()">
+      <h6>Edit Product:</h6>
+      <div class="form-group">
+        <label>Name: </label>
+        <input type="text" [(ngModel)]="editProduct.name" name="name" class="form-control col-6">
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">Update</button>
+    </form>
+  </div>
+  
+  
+  <!-- Table of all products -->
+  <h3 style="text-align: center">Products in the {{categoryName}} Category </h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="w-25" scope="col">ID</th>
+        <th class="w-25" scope="col">Name</th>
+        <th class="w-25" scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let i of products">
+        <tr *ngIf="i.category.id == this.parameterID">
+          <th class="w-25" >{{i.id}}</th>
+          <td class="w-25">{{i.name}}</td>
+          <td class="w-25"> 
+            <button (click)="deleteProduct(i.id)" class="btn btn-outline-danger ml-1">Delete</button> 
+            <button (click)="showEditForm(i)" class="btn btn-outline-info ml-1">Update</button> 
+          </td>
+        </tr>
+      </ng-container>
+      </tbody>
+    </table>

@@ -1,0 +1,63 @@
+<!-- form adds a new category -->
+<div style="width: 50%; display:inline-block">
+  <form #myForm="ngForm" (submit)="addNewCategory();myForm.reset()">
+    <h6>Add a New Category:</h6>
+    <div class="form-group">
+      <label>Name: </label>
+      <input type="text" [(ngModel)]="category.name" name="name" class="form-control col-6">
+    </div>
+    <div class="form-group">
+      <label>Parent Category: </label>
+      <select [(ngModel)]="category.parent_id" name="parent_id" class="form-control col-6">
+        <option *ngFor="let i of categories" value="{{i.id}}">{{i.name}}</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+  </form>
+</div>
+
+
+<!-- form pops up if you click update -->
+<div *ngIf="showEditFormBoolean" style="width: 50%; display:inline-block">
+  <form #myForm="ngForm" (submit)="updateCategory();myForm.reset()">
+    <h6>Edit Category:</h6>
+    <div class="form-group">
+      <label>Name: </label>
+      <input type="hidden" [(ngModel)]="editCategory.id" name="id">
+      <input type="text" [(ngModel)]="editCategory.name" name="name" class="form-control col-6">
+    </div>
+    <div class="form-group">
+      <label>Parent Category: </label>
+      <select [(ngModel)]="editCategory.parent_id" name="parent_id" class="form-control col-6">
+        <option *ngFor="let i of categories" value="{{i.id}}">{{i.name}}</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm">Update</button>
+  </form>
+</div>
+
+
+<!-- Table of all categories -->
+<h3 style="text-align: center">Engage3 Categories</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th class="w-25" scope="col">ID</th>
+      <th class="w-25" scope="col">Name</th>
+      <th class="w-25" scope="col">Parent Category ID</th>
+      <th class="w-25" scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let i of categories">
+      <th scope="row">{{i.id}}</th>
+      <td>{{i.name}}</td>
+      <td>{{i.parent_id}}</td>
+      <td> 
+        <button (click)="openProducts(i.id)" class="btn btn-outline-success">View Products</button> 
+        <button (click)="deleteCategory(i.id)" class="btn btn-outline-danger ml-1">Delete</button> 
+        <button (click)="showEditForm(i)" class="btn btn-outline-info ml-1">Update</button> 
+      </td>
+    </tr>
+    </tbody>
+  </table>
